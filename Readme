@@ -1,0 +1,10 @@
+chip-8 emulator
+========================================================================================================================
+Implementation of a chip-8 emulator. Project is ongoing and not finished. Documentation about the chip-8 hardware are
+from Wikipedia.
+
+licences
+========================================================================================================================
+Using catch2 under Boost Software License 1.0.
+
+This work is licensed under the MIT license.
