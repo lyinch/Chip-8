@@ -90,3 +90,29 @@ TEST_CASE("opcode 4XNN","[opcodes] [decode]") {
     ch8.decode();
     REQUIRE( ch8.PC == 2);
 }
+
+TEST_CASE("opcode 5XNN","[opcodes] [decode]") {
+    // 5XY0 skips the next instruction if VX equals VY
+    unsigned short PC{0};
+    unsigned short opcode = 0x5000;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE( ch8.PC == 4);
+    ch8.PC = 0;
+    ch8.VF[1] = 1;
+    ch8.opcode = 0x5110;
+    ch8.decode();
+    REQUIRE( ch8.PC == 4);
+    ch8.PC = 0;
+    ch8.VF[1] = 1;
+    ch8.VF[2] = 1;
+    ch8.opcode = 0x5120;
+    ch8.decode();
+    REQUIRE( ch8.PC == 4);
+    ch8.PC = 0;
+    ch8.VF[1] = 1;
+    ch8.VF[3] = 20;
+    ch8.opcode = 0x5140;
+    ch8.decode();
+    REQUIRE( ch8.PC == 2);
+}

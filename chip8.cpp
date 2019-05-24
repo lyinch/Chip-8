@@ -39,7 +39,7 @@ void chip8::fetch(){
 void chip8::decode() {
     // register index is, if present, always at this position
     unsigned char vX = (opcode & 0x0F00) >> 8;
-    unsigned char vY = (opcode & 0x00F0) >> 8;
+    unsigned char vY = (opcode & 0x00F0) >> 4;
 
     // opcodes are in the form of ABCD where each letter corresponds 4 bits. We first do a switch-case on the first 4
     // bits of the opcode
@@ -85,6 +85,15 @@ void chip8::decode() {
         case 0x4000:{
             // 4XNN skips the next instruction if VX does not equal NN
             if(VF[vX] != (opcode & 0x00FF))
+                PC += 4;
+            else
+                PC += 2;
+            break;
+        }
+
+        case 0x5000:{
+            // 5XY0 skips the next instruction if VX equals VY
+            if(VF[vX] == VF[vY])
                 PC += 4;
             else
                 PC += 2;
