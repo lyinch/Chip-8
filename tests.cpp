@@ -116,3 +116,24 @@ TEST_CASE("opcode 5XNN","[opcodes] [decode]") {
     ch8.decode();
     REQUIRE( ch8.PC == 2);
 }
+
+TEST_CASE("opcode 6XNN","[opcodes] [decode]") {
+    // 6XNN set VX to NN
+    unsigned short PC{0};
+    unsigned short opcode = 0x6000;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0) );
+    ch8.PC = 0;
+    ch8.opcode = 0x6001;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 1) );
+    ch8.PC = 0;
+    ch8.opcode = 0x6010;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0x10) );
+    ch8.PC = 0;
+    ch8.opcode = 0x641F;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[4] == 0x1F) );
+}

@@ -100,6 +100,12 @@ void chip8::decode() {
             break;
         }
 
+        case 0x6000:{
+            // 6XNN set VX to NN
+            VF[vX] = (opcode & 0x00FF);
+            PC += 2;
+        }
+
     }
 }
 
