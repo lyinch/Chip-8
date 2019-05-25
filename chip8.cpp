@@ -114,6 +114,17 @@ void chip8::decode() {
             break;
         }
 
+        case 0x8000:{
+            switch (opcode&0x000F){
+                case 0:{
+                    // 8XY0 sets VX to the value of VY
+                    VF[vX] = VF[vY];
+                    PC+= 2;
+                    break;
+                }
+            }
+            break;
+        }
     }
 }
 

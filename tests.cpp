@@ -162,3 +162,23 @@ TEST_CASE("opcode 7XNN", "[opcodes] [decode]"){
     ch8.decode();
     REQUIRE( (ch8.PC == 2 && ch8.VF[1] == 0x16) );
 }
+
+TEST_CASE("opcode 8XY0", "[opcodes] [decode]"){
+    // 8XY0 sets VX to the value of VY
+    unsigned short PC{0};
+    unsigned short opcode = 0x8000;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0x0) );
+    ch8.PC = 0;
+    ch8.opcode = 0x8010;
+    ch8.VF[1] = 0x10;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0x10) );
+    ch8.PC = 0;
+    ch8.opcode = 0x8120;
+    ch8.VF[2] = 0x0F;
+    ch8.VF[1] = 0x20;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[1] == 0x0F) );
+}
