@@ -137,3 +137,28 @@ TEST_CASE("opcode 6XNN","[opcodes] [decode]") {
     ch8.decode();
     REQUIRE( (ch8.PC == 2 && ch8.VF[4] == 0x1F) );
 }
+
+TEST_CASE("opcode 7XNN", "[opcodes] [decode]"){
+    // 7XNN adds NN to VX, carry flag is not changed
+    unsigned short PC{0};
+    unsigned short opcode = 0x7000;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0x0) );
+    ch8.PC = 0;
+    ch8.opcode = 0x7005;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0x5) );
+    ch8.PC = 0;
+    ch8.opcode = 0x7005;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0xA) );
+    ch8.PC = 0;
+    ch8.opcode = 0x7115;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[1] == 0x15) );
+    ch8.PC = 0;
+    ch8.opcode = 0x7101;
+    ch8.decode();
+    REQUIRE( (ch8.PC == 2 && ch8.VF[1] == 0x16) );
+}

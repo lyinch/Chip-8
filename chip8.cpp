@@ -107,6 +107,13 @@ void chip8::decode() {
             break;
         }
 
+        case 0x7000:{
+            // 7XNN adds NN to VX, carry flag is not changed
+            VF[vX] += opcode&0x00FF;
+            PC += 2;
+            break;
+        }
+
     }
 }
 
