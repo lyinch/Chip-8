@@ -122,6 +122,14 @@ void chip8::decode() {
                     PC+= 2;
                     break;
                 }
+
+                case 1:{
+                    // 8XY1 sets VX to VX | VY (bitwise or)
+                    VF[vX] |= VF[vY];
+                    PC+= 2;
+                    break;
+                }
+
             }
             break;
         }
