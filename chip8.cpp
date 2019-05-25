@@ -137,6 +137,12 @@ void chip8::decode() {
                     break;
                 }
 
+                case 3:{
+                    // 8XY3 sets VX to VX ^ VY (bitwise xor)
+                    VF[vX] ^=VF[vY];
+                    PC+= 2;
+                    break;
+                }
             }
             break;
         }
