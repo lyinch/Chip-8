@@ -151,6 +151,18 @@ void chip8::decode() {
                     VF[0xF] = (sum & 0x100)>>8;
                     VF[vX] = sum;
                     PC += 2;
+                    break;
+                }
+                case 5:{
+                    // 8XY5 subtracts VY from VX. Set VF to 0 if there's a borrow, and to 1 otherwise
+                    unsigned short difference = VF[vX] - VF[vY];
+                    if(VF[vY] > VF[vX])
+                        VF[0xF] = 0;
+                    else
+                        VF[0xF] = 1;
+                    VF[vX] = difference;
+                    PC += 2;
+                    break;
                 }
             }
             break;
