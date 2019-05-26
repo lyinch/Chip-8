@@ -164,6 +164,13 @@ void chip8::decode() {
                     PC += 2;
                     break;
                 }
+                case 6:{
+                    // 8XY6 stores the least significant bit of VX in VF, then shifts VX to the right by 1
+                    VF[0xF] = VF[vX] & 0x1;
+                    VF[vX] >>= 1;
+                    PC += 2;
+                    break;
+                }
             }
             break;
         }
