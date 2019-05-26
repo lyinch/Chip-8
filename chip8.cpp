@@ -25,8 +25,6 @@ SOFTWARE.
 #include <iostream>
 #include "chip8.h"
 
-chip8::chip8() {}
-
 void chip8::cycle() {
     fetch();
     decode();
@@ -213,8 +211,17 @@ void chip8::decode() {
             PC = VF[0] + opcode&0x0FFF;
             break;
         }
+        case 0xC000:{
+            // CXNN Sets VX to the result of NN&rand()
+            VF[vX] = (opcode & 0x00FF) & random_256();
+            PC += 2;
+            break;
+        }
 
     }
 }
 
-chip8::chip8( unsigned short pc, unsigned short opcode) : PC(pc), opcode(opcode) {}
+chip8::chip8( unsigned short pc, unsigned short opcode) : PC(pc), opcode(opcode) {
+    rng = std::mt19937(dev());
+}
+

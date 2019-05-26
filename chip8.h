@@ -25,10 +25,11 @@ SOFTWARE.
 #ifndef CHIP_8_CHIP8_H
 #define CHIP_8_CHIP8_H
 
+#include <random>
 
 class chip8 {
 public:
-    chip8();
+    chip8(){rng = std::mt19937(dev());};
 
     chip8(unsigned short pc, unsigned short opcode);
 
@@ -55,9 +56,15 @@ public:
 
     void cycle();
 
+    unsigned char random_256(){
+        return rand_256(rng);
+    }
+
 private:
 
-
+    std::random_device dev; // generate a (mostly) true, slow random number
+    std::mt19937 rng; // seed the mersenne twister with the random number. Pseudo-random number generator
+    std::uniform_int_distribution<std::mt19937::result_type> rand_256; // tweak the random numbers to a range of [0,255] both inclusive. This is guaranteed to be unbiased
 
     // the stack is used to store the return address when subroutines are called. 48 bytes for 24 levels of nesting
     unsigned short stack[24] {0};

@@ -369,3 +369,18 @@ TEST_CASE("opcode BNNN", "[opcodes] [decode]"){
     ch8.decode();
     REQUIRE(ch8.PC == 0x1C3);
 }
+
+TEST_CASE("opcode CXNN", "[opcodes] [decode]"){
+    // CXNN Sets VX to the result of NN&rand()
+    // can't really test this because the seed can't be fixed...
+    unsigned short PC{0};
+    unsigned short opcode = 0xC0AB;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    // simply check that we haven't assigned the NN number and that it's not 0, the initial state. Due to the random
+    // number this test may fail and is a bit useless...
+    REQUIRE(ch8.VF[0] != 0xC0AB);
+    REQUIRE(ch8.VF[0] != 0x0);
+
+}
