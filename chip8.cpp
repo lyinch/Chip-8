@@ -182,6 +182,13 @@ void chip8::decode() {
                     PC += 2;
                     break;
                 }
+                case 0xE:{
+                    // 8XYE stores the most significant bit of VX in VF, then shifts VX to the left by 1
+                    VF[0xF] = (VF[vX] &0x80) >> 7; // 0x80 = b 1000 000
+                    VF[vX] <<= 1;
+                    PC += 2;
+                    break;
+                }
             }
             break;
         }

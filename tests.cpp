@@ -306,3 +306,27 @@ TEST_CASE("opcode 8XY7", "[opcodes] [decode]"){
     REQUIRE(ch8.VF[0] == (unsigned char)(0x00-0x01));
     REQUIRE(ch8.VF[0xF] == 0x00);
 }
+
+TEST_CASE("opcode 8XYE", "[opcodes] [decode]"){
+    // 8XYE stores the most significant bit of VX in VF, then shifts VX to the left by 1
+    unsigned short PC{0};
+    unsigned short opcode = 0x800E;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x00;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[0] == 0x00);
+    REQUIRE(ch8.VF[0xF] == 0x00);
+    ch8.PC = 0;
+    ch8.VF[0] = 0x80;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[0] == 0x0);
+    REQUIRE(ch8.VF[0xF] == 0x01);
+    ch8.PC = 0;
+    ch8.VF[0] = 0x81;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[0] == 0x2);
+    REQUIRE(ch8.VF[0xF] == 0x01);
+}
