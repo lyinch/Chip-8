@@ -192,6 +192,14 @@ void chip8::decode() {
             }
             break;
         }
+        case 0x9000:{
+            // 9XY0 skips the next instruction if VX != VY
+            if(VF[vX] == VF[vY])
+                PC += 2;
+            else
+                PC += 4;
+            break;
+        }
     }
 }
 

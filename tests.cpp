@@ -330,3 +330,18 @@ TEST_CASE("opcode 8XYE", "[opcodes] [decode]"){
     REQUIRE(ch8.VF[0] == 0x2);
     REQUIRE(ch8.VF[0xF] == 0x01);
 }
+
+TEST_CASE("opcode 9XY0", "[opcodes] [decode]"){
+    // 9XY0 skips the next instruction if VX != VY
+    unsigned short PC{0};
+    unsigned short opcode = 0x9010;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x00;
+    ch8.VF[1] = 0x00;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    ch8.PC = 0;
+    ch8.VF[0] = 0x01;
+    ch8.decode();
+    REQUIRE(ch8.PC == 4);
+}
