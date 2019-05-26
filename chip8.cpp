@@ -171,6 +171,17 @@ void chip8::decode() {
                     PC += 2;
                     break;
                 }
+                case 7:{
+                    // 8XY7 sets VX to VY minus VX. VF is set to 0 when there's a borrow, and 1 otherwise
+                    unsigned short difference = VF[vY] - VF[vX];
+                    if(VF[vX] > VF[vY])
+                        VF[0xF] = 0;
+                    else
+                        VF[0xF] = 1;
+                    VF[vX] = difference;
+                    PC += 2;
+                    break;
+                }
             }
             break;
         }

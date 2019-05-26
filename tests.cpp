@@ -286,3 +286,23 @@ TEST_CASE("opcode 8XY6", "[opcodes] [decode]") {
     REQUIRE(ch8.VF[0] == 0x08);
     REQUIRE(ch8.VF[0xF] == 0x01);
 }
+
+TEST_CASE("opcode 8XY7", "[opcodes] [decode]"){
+    // 8XY7 sets VX to VY minus VX. VF is set to 0 when there's a borrow, and 1 otherwise
+    unsigned short PC{0};
+    unsigned short opcode = 0x8017;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x01;
+    ch8.VF[1] = 0x03;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[0] == 0x02);
+    REQUIRE(ch8.VF[0xF] == 0x01);
+    ch8.PC = 0;
+    ch8.VF[0] = 0x01;
+    ch8.VF[1] = 0x00;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[0] == (unsigned char)(0x00-0x01));
+    REQUIRE(ch8.VF[0xF] == 0x00);
+}
