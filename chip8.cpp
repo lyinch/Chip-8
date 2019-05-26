@@ -143,6 +143,15 @@ void chip8::decode() {
                     PC+= 2;
                     break;
                 }
+                case 4:{
+                    // 8XY4 adds VY to VX. Set VF to 1 if there's a carry, and to 0 otherwise
+                    // registers are 8 bit. We sum them up in a 16bit variable and check if there was an overflow.
+                    // 0x100 gives us b1 0000 0000 and only works because the chip-8 is a big-endian machine
+                    unsigned short sum = VF[vX] + VF[vY];
+                    VF[0xF] = (sum & 0x100)>>8;
+                    VF[vX] = sum;
+                    PC += 2;
+                }
             }
             break;
         }

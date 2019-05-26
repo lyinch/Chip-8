@@ -228,3 +228,24 @@ TEST_CASE("opcode 8XY3", "[opcodes] [decode]"){
     ch8.decode();
     REQUIRE( (ch8.PC == 2 && ch8.VF[0] == 0) );
 }
+
+TEST_CASE("opcode 8XY4", "[opcodes] [decode]"){
+    // 8XY4 adds VY to VX. Set VF to 1 if there's a carry, and to 0 otherwise
+    unsigned short PC{0};
+    unsigned short opcode = 0x8014;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x0;
+    ch8.VF[1] = 0x0A;
+    ch8.decode();
+    REQUIRE( ch8.PC == 2  );
+    REQUIRE(ch8.VF[0] == 0x0A);
+    REQUIRE(ch8.VF[0xF] == 0x00);
+    ch8.PC = 0;
+    ch8.VF[0] = 0xF0;
+    ch8.VF[1] = 0x10;
+    ch8.decode();
+    REQUIRE( ch8.PC == 2  );
+    REQUIRE(ch8.VF[0] == 0x0);
+    REQUIRE(ch8.VF[0xF] == 0x01);
+
+}
