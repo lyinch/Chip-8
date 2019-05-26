@@ -355,3 +355,17 @@ TEST_CASE("opcode ANNN", "[opcodes] [decode]"){
     REQUIRE(ch8.PC == 2);
     REQUIRE(ch8.I == 0x0123);
 }
+
+TEST_CASE("opcode BNNN", "[opcodes] [decode]"){
+    // BNNN jumps to the address NNN + V0
+    unsigned short PC{0};
+    unsigned short opcode = 0xB123;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x00;
+    ch8.decode();
+    REQUIRE(ch8.PC == 0x123);
+    ch8.VF[0] = 0xA0;
+    ch8.PC = 0;
+    ch8.decode();
+    REQUIRE(ch8.PC == 0x1C3);
+}

@@ -208,6 +208,12 @@ void chip8::decode() {
             break;
         }
 
+        case 0xB000:{
+            // BNNN jumps to the address NNN + V0
+            PC = VF[0] + opcode&0x0FFF;
+            break;
+        }
+
     }
 }
 
