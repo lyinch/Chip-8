@@ -48,13 +48,14 @@ public:
     // 16 8-bit registers named V0 - VF. The VF register is sometimes a flag.
     unsigned char VF[16] {0};
 
+    // address register is 16 bits wide
+    unsigned short I {0};
+
     void decode();
 
     void cycle();
 
 private:
-    // address register is 16 bits wide
-    unsigned short I {0};
 
 
 

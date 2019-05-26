@@ -345,3 +345,13 @@ TEST_CASE("opcode 9XY0", "[opcodes] [decode]"){
     ch8.decode();
     REQUIRE(ch8.PC == 4);
 }
+
+TEST_CASE("opcode ANNN", "[opcodes] [decode]"){
+    // ANNN sets I to the address NNN
+    unsigned short PC{0};
+    unsigned short opcode = 0xA123;
+    chip8 ch8(PC,opcode);
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x0123);
+}

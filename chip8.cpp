@@ -192,14 +192,22 @@ void chip8::decode() {
             }
             break;
         }
-        case 0x9000:{
+        case 0x9000: {
             // 9XY0 skips the next instruction if VX != VY
-            if(VF[vX] == VF[vY])
+            if (VF[vX] == VF[vY])
                 PC += 2;
             else
                 PC += 4;
             break;
         }
+
+        case 0xA000:{
+            // ANNN sets I to the address NNN
+            I = opcode&0x0FFF;
+            PC += 2;
+            break;
+        }
+
     }
 }
 
