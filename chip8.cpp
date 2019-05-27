@@ -218,6 +218,67 @@ void chip8::decode() {
             break;
         }
 
+        case 0xD000:{
+            std::cout << opcode << " not implemented" << std::endl;
+            break;
+        }
+
+        case 0xE000:{
+            switch (opcode&0x000F){
+                case 0xE:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x1:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+            }
+            break;
+        }
+
+        case 0xF000:{
+            switch (opcode&0x00FF){
+                case 0x07:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x0A:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x15:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x18:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x1E:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x29:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x33:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x55:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+                case 0x65:{
+                    std::cout << opcode << " not implemented" << std::endl;
+                    break;
+                }
+            }
+            break;
+        }
+
     }
 }
 
