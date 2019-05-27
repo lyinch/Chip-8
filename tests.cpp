@@ -402,3 +402,18 @@ TEST_CASE("opcode FX17", "[opcodes] [decode]"){
     REQUIRE(ch8.PC == 2);
     REQUIRE(ch8.sound_timer == 0x20);
 }
+
+TEST_CASE("opcode FX1E", "[opcodes] [decode]"){
+    // FX1E adds VX to I
+    unsigned short PC{0};
+    unsigned short opcode = 0xF11E;
+    chip8 ch8(PC,opcode);
+    ch8.VF[1] = 0x20;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x20);
+    ch8.PC = 0;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x40);
+}

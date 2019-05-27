@@ -262,7 +262,9 @@ void chip8::decode() {
                     break;
                 }
                 case 0x1E:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX1E adds VX to I
+                    I += VF[vX];
+                    PC += 2;
                     break;
                 }
                 case 0x29:{
