@@ -370,6 +370,17 @@ TEST_CASE("opcode BNNN", "[opcodes] [decode]"){
     REQUIRE(ch8.PC == 0x1C3);
 }
 
+TEST_CASE("opcode FX07", "[opcodes] [decode]"){
+    // FX07 sets VX to the value of the delay timer
+    unsigned short PC{0};
+    unsigned short opcode = 0xF107;
+    chip8 ch8(PC,opcode);
+    ch8.delay_timer = 0x23;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.VF[1] == 0x23);
+}
+
 TEST_CASE("opcode FX15", "[opcodes] [decode]"){
     // FX15 sets the sound timer to VX
     unsigned short PC{0};

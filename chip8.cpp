@@ -240,7 +240,9 @@ void chip8::decode() {
         case 0xF000:{
             switch (opcode&0x00FF){
                 case 0x07:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX07 sets VX to the value of the delay timer
+                    VF[vX] = delay_timer;
+                    PC += 2;
                     break;
                 }
                 case 0x0A:{
@@ -249,13 +251,13 @@ void chip8::decode() {
                 }
                 case 0x15:{
                     // FX15 sets the delay timer to VX
-                    delay_timer = VF[(opcode&0x0F00)>>8];
+                    delay_timer = VF[vX];
                     PC += 2;
                     break;
                 }
                 case 0x18:{
                     // FX15 sets the sound timer to VX
-                    sound_timer = VF[(opcode&0x0F00)>>8];
+                    sound_timer = VF[vX];
                     PC += 2;
                     break;
                 }
