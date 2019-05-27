@@ -248,11 +248,15 @@ void chip8::decode() {
                     break;
                 }
                 case 0x15:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX15 sets the delay timer to VX
+                    delay_timer = VF[(opcode&0x0F00)>>8];
+                    PC += 2;
                     break;
                 }
                 case 0x18:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX15 sets the sound timer to VX
+                    sound_timer = VF[(opcode&0x0F00)>>8];
+                    PC += 2;
                     break;
                 }
                 case 0x1E:{

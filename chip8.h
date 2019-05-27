@@ -52,6 +52,10 @@ public:
     // address register is 16 bits wide
     unsigned short I {0};
 
+    // two timers that count down at 60Hz to 0
+    unsigned  char delay_timer {0};
+    unsigned  char sound_timer {0};
+
     void decode();
 
     void cycle();
