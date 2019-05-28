@@ -272,7 +272,12 @@ void chip8::decode() {
                     break;
                 }
                 case 0x33:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX33 From the decimal representation of VX, store the hundreds digit in memory location I,
+                    // the tens digit ad I+1 and the ones digit at I+2
+                    memory[I] =   (unsigned  char)  VF[vX]/100;
+                    memory[I+1] = (unsigned  char) (VF[vX] % 100)/10;
+                    memory[I+2] = (unsigned  char)  VF[vX] % 10;
+                    PC += 2;
                     break;
                 }
                 case 0x55:{

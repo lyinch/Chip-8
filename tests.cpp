@@ -418,6 +418,23 @@ TEST_CASE("opcode FX1E", "[opcodes] [decode]"){
     REQUIRE(ch8.I == 0x40);
 }
 
+
+TEST_CASE("opcode FX33", "[opcodes] [decode]"){
+    // FX33 From the decimal representation of VX, store the hundreds digit in memory location I,
+    // the tens digit ad I+1 and the ones digit at I+2
+    unsigned short PC{0};
+    unsigned short opcode = 0xF133;
+    chip8 ch8(PC, opcode);
+    ch8.VF[1] = 123;
+    ch8.I = 0x200;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x200);
+    REQUIRE(ch8.memory[0x200] == 1);
+    REQUIRE(ch8.memory[0x201] == 2);
+    REQUIRE(ch8.memory[0x202] == 3);
+}
+
 TEST_CASE("opcode FX55", "[opcodes] [decode]"){
     // FX55 stores V0 to VX in memory starting at address I
     unsigned short PC{0};
