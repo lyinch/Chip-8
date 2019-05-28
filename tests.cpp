@@ -417,3 +417,22 @@ TEST_CASE("opcode FX1E", "[opcodes] [decode]"){
     REQUIRE(ch8.PC == 2);
     REQUIRE(ch8.I == 0x40);
 }
+
+TEST_CASE("opcode FX55", "[opcodes] [decode]"){
+    // FX1E adds VX to I
+    unsigned short PC{0};
+    unsigned short opcode = 0xF455;
+    chip8 ch8(PC,opcode);
+    ch8.VF[0] = 0x20;
+    ch8.VF[1] = 0x21;
+    ch8.VF[2] = 0x22;
+    ch8.VF[3] = 0x23;
+    ch8.I = 0x200;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x200);
+    REQUIRE(ch8.memory[0x200] == 0x20);
+    REQUIRE(ch8.memory[0x201] == 0x21);
+    REQUIRE(ch8.memory[0x202] == 0x22);
+    REQUIRE(ch8.memory[0x203] == 0x23);
+}

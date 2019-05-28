@@ -276,7 +276,11 @@ void chip8::decode() {
                     break;
                 }
                 case 0x55:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // FX55 stores V0 to VX in memory starting at address I
+                    for(int offset = 0; offset < vX; ++offset){
+                        memory[I+offset] = VF[offset];
+                    }
+                    PC += 2;
                     break;
                 }
                 case 0x65:{
