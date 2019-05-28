@@ -433,6 +433,15 @@ TEST_CASE("opcode FX33", "[opcodes] [decode]"){
     REQUIRE(ch8.memory[0x200] == 1);
     REQUIRE(ch8.memory[0x201] == 2);
     REQUIRE(ch8.memory[0x202] == 3);
+    ch8.VF[1] = 23;
+    ch8.I = 0x200;
+    ch8.PC = 0;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x200);
+    REQUIRE(ch8.memory[0x200] == 0);
+    REQUIRE(ch8.memory[0x201] == 2);
+    REQUIRE(ch8.memory[0x202] == 3);
 }
 
 TEST_CASE("opcode FX55", "[opcodes] [decode]"){
