@@ -418,6 +418,17 @@ TEST_CASE("opcode FX1E", "[opcodes] [decode]"){
     REQUIRE(ch8.I == 0x40);
 }
 
+TEST_CASE("opcode FX29", "[opcodes] [decode]"){
+    // FX29 Sets I to the location of the sprite for the character in VX
+    unsigned short PC{0};
+    unsigned short opcode = 0xF129;
+    chip8 ch8(PC,opcode);
+    ch8.VF[1] = 0x0A;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    REQUIRE(ch8.I == 0x32);
+}
+
 
 TEST_CASE("opcode FX33", "[opcodes] [decode]"){
     // FX33 From the decimal representation of VX, store the hundreds digit in memory location I,

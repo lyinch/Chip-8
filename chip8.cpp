@@ -269,7 +269,11 @@ void chip8::decode() {
                     break;
                 }
                 case 0x29:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // Sets I to the location of the sprite for the character in VX
+                    // each sprite is represented as 5 bytes in memory. Sprite for the char 0 starts at memory 0x0
+                    // sprite for char 1 starts at memory location 0x05 ,...
+                    I = VF[vX]*5;
+                    PC += 2;
                     break;
                 }
                 case 0x33:{
