@@ -482,3 +482,14 @@ TEST_CASE("opcode FX65", "[opcodes] [decode]"){
     REQUIRE(ch8.VF[3]  == 0x23);
 }
 
+TEST_CASE("copy sprites"," "){
+// Check if the sprites are copied correctly for the different constructors
+unsigned short PC{0};
+unsigned short opcode = 0x000;
+chip8 ch8(PC,opcode);
+REQUIRE(ch8.memory[0] == 0xF0);
+REQUIRE(ch8.memory[5] == 0x20);
+chip8 ch8_2;
+REQUIRE(ch8_2.memory[0] == 0xF0);
+REQUIRE(ch8_2.memory[5] == 0x20);
+}

@@ -29,7 +29,10 @@ SOFTWARE.
 
 class chip8 {
 public:
-    chip8(){rng = std::mt19937(dev());};
+    chip8(){
+        rng = std::mt19937(dev());
+        init();
+    };
 
     chip8(unsigned short pc, unsigned short opcode);
 
@@ -38,7 +41,39 @@ public:
     // at 0x200
     // the upper 256 bytes (0xF00 - 0xFFF) are reserved for display refresh. The 96 bytes below that (0xEA0-0xEFF)
     // are reserved for the call stack, internal use and variables.
+    // Addresses 0x000 - 0x50 are reserved for the hexadecimal sprites. 16 sprites ate 5 bytes each.
     unsigned char memory[0x1000] {0};
+
+    // Each character of the hexadecimal system is represented with 5 bytes. For example the character 2:
+    /*
+
+    sprite  binary      hex
+    ****    11110000    0xF0
+       *    00010000    0x10
+    ****    11110000    0xF0
+    *       10000000    0x80
+    ****    11110000    0xF0
+
+     */
+    // This representation needs to be copied into memory
+    unsigned char fonts[0x50]{
+            0xF0, 0x90, 0x90, 0x90, 0xF0, //0
+            0x20, 0x60, 0x20, 0x20, 0x70, //1
+            0xF0, 0x10, 0xF0, 0x80, 0xF0, //2
+            0xF0, 0x10, 0xF0, 0x10, 0xF0, //3
+            0x90, 0x90, 0xF0, 0x10, 0x10, //4
+            0xF0, 0x80, 0xF0, 0x10, 0xF0, //5
+            0xF0, 0x80, 0xF0, 0x90, 0xF0, //6
+            0xF0, 0x10, 0x20, 0x40, 0x40, //7
+            0xF0, 0x90, 0xF0, 0x90, 0xF0, //8
+            0xF0, 0x90, 0xF0, 0x10, 0xF0, //9
+            0xF0, 0x90, 0xF0, 0x90, 0x90, //A
+            0xE0, 0x90, 0xE0, 0x90, 0xE0, //B
+            0xF0, 0x80, 0x80, 0x80, 0xF0, //C
+            0xE0, 0x90, 0x90, 0x90, 0xE0, //D
+            0xF0, 0x80, 0xF0, 0x80, 0xF0, //E
+            0xF0, 0x80, 0xF0, 0x80, 0x80  //F
+    };
 
     // program counter needs to address 4096 locations
     unsigned short PC {0};
@@ -59,6 +94,8 @@ public:
     void decode();
 
     void cycle();
+
+    void init();
 
     unsigned char random_256(){
         return rand_256(rng);

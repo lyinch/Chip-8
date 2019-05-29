@@ -24,6 +24,7 @@ SOFTWARE.
 
 #include <iostream>
 #include "chip8.h"
+#include <iterator>
 
 void chip8::cycle() {
     fetch();
@@ -305,5 +306,11 @@ void chip8::decode() {
 
 chip8::chip8( unsigned short pc, unsigned short opcode) : PC(pc), opcode(opcode) {
     rng = std::mt19937(dev());
+    init();
+}
+
+void chip8::init() {
+    // copy all the fonts into the beginning of the memory
+    std::copy(std::begin(fonts),std::end(fonts),std::begin(memory));
 }
 
