@@ -227,11 +227,19 @@ void chip8::decode() {
         case 0xE000:{
             switch (opcode&0x000F){
                 case 0xE:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // EX9E skips the next instruction if the key stored in VX is pressed
+                    if(key[VF[vX]])
+                        PC += 4;
+                    else
+                        PC += 2;
                     break;
                 }
                 case 0x1:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    // EXA1 Skips the next instruction if the key stored in VX isn't pressed
+                    if(key[VF[vX]])
+                        PC += 2;
+                    else
+                        PC += 4;
                     break;
                 }
             }

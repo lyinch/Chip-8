@@ -370,6 +370,34 @@ TEST_CASE("opcode BNNN", "[opcodes] [decode]"){
     REQUIRE(ch8.PC == 0x1C3);
 }
 
+TEST_CASE("opcode EX9E","[opcodes] [decode]"){
+    // EX9E skips the next instruction if the key stored in VX is pressed
+    unsigned short PC{0};
+    unsigned short opcode = 0xE19E;
+    chip8 ch8(PC,opcode);
+    ch8.VF[1] = 0x0A;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+    ch8.PC = 0;
+    ch8.key[0xA] = true;
+    ch8.decode();
+    REQUIRE(ch8.PC == 4);
+}
+
+TEST_CASE("opcode EXA1","[opcodes] [decode]"){
+    // EXA1 Skips the next instruction if the key stored in VX isn't pressed
+    unsigned short PC{0};
+    unsigned short opcode = 0xE1A1;
+    chip8 ch8(PC,opcode);
+    ch8.VF[1] = 0x0A;
+    ch8.decode();
+    REQUIRE(ch8.PC == 4);
+    ch8.PC = 0;
+    ch8.key[0xA] = true;
+    ch8.decode();
+    REQUIRE(ch8.PC == 2);
+}
+
 TEST_CASE("opcode FX07", "[opcodes] [decode]"){
     // FX07 sets VX to the value of the delay timer
     unsigned short PC{0};

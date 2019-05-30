@@ -97,6 +97,9 @@ public:
 
     void init();
 
+    // Chip-8 has a hexadecimal keyboard. key[X] is true, if the key is currently pressed
+    bool key[16] {false};
+
     unsigned char random_256(){
         return rand_256(rng);
     }
