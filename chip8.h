@@ -97,7 +97,7 @@ public:
 
     void init();
 
-    void load_program(u_int16_t data[]);
+    void load_program(std::vector<uint16_t> data);
 
     // Chip-8 has a hexadecimal keyboard. key[X] is true, if the key is currently pressed
     bool key[16] {false};

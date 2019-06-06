@@ -326,12 +326,12 @@ void chip8::init() {
     std::copy(std::begin(fonts),std::end(fonts),std::begin(memory));
 }
 
-void chip8::load_program(u_int16_t data[]) {
+void chip8::load_program(std::vector<uint16_t> data) {
     PC = 0x200;
     opcode = 0;
     I = 0;
     int k = 0;
-    for(int i = 0x200; i < 0x200+(sizeof(data)/sizeof(data[0])); ++i){
+    for(int i = 0x200; i < 0x200+data.size()*2; ++i){
         if(i%2 == 0)
             memory[i] = (data[k]&0xFF00)>>8;
         else {

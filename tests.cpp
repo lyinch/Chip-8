@@ -535,7 +535,7 @@ TEST_CASE("copy sprites"," "){
 
 TEST_CASE("load program"," "){
     chip8 ch8;
-    u_int16_t data[] = {0x1234, 0xABCD};
+    std::vector<uint16_t> data = {0x1234, 0xABCD, 0xAABB};
     ch8.load_program(data);
     REQUIRE(ch8.PC == 0x200);
     REQUIRE(ch8.I == 0);
@@ -544,5 +544,7 @@ TEST_CASE("load program"," "){
     REQUIRE(ch8.memory[0x201] == 0x34);
     REQUIRE(ch8.memory[0x202] == 0xAB);
     REQUIRE(ch8.memory[0x203] == 0xCD);
-    REQUIRE(ch8.memory[0x204] == 0);
+    REQUIRE(ch8.memory[0x204] == 0xAA);
+    REQUIRE(ch8.memory[0x205] == 0xBB);
+    REQUIRE(ch8.memory[0x206] == 0);
  }
