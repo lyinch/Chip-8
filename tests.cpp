@@ -522,13 +522,27 @@ TEST_CASE("opcode FX65", "[opcodes] [decode]"){
 }
 
 TEST_CASE("copy sprites"," "){
-// Check if the sprites are copied correctly for the different constructors
-unsigned short PC{0};
-unsigned short opcode = 0x000;
-chip8 ch8(PC,opcode);
-REQUIRE(ch8.memory[0] == 0xF0);
-REQUIRE(ch8.memory[5] == 0x20);
-chip8 ch8_2;
-REQUIRE(ch8_2.memory[0] == 0xF0);
-REQUIRE(ch8_2.memory[5] == 0x20);
+    // Check if the sprites are copied correctly for the different constructors
+    unsigned short PC{0};
+    unsigned short opcode = 0x000;
+    chip8 ch8(PC,opcode);
+    REQUIRE(ch8.memory[0] == 0xF0);
+    REQUIRE(ch8.memory[5] == 0x20);
+    chip8 ch8_2;
+    REQUIRE(ch8_2.memory[0] == 0xF0);
+    REQUIRE(ch8_2.memory[5] == 0x20);
 }
+
+TEST_CASE("load program"," "){
+    chip8 ch8;
+    u_int16_t data[] = {0x1234, 0xABCD};
+    ch8.load_program(data);
+    REQUIRE(ch8.PC == 0x200);
+    REQUIRE(ch8.I == 0);
+    REQUIRE(ch8.opcode == 0);
+    REQUIRE(ch8.memory[0x200] == 0x12);
+    REQUIRE(ch8.memory[0x201] == 0x34);
+    REQUIRE(ch8.memory[0x202] == 0xAB);
+    REQUIRE(ch8.memory[0x203] == 0xCD);
+    REQUIRE(ch8.memory[0x204] == 0);
+ }
