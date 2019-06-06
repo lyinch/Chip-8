@@ -99,6 +99,7 @@ public:
 
     void load_program(std::vector<uint16_t> data);
 
+    char info_string[100];
     // Chip-8 has a hexadecimal keyboard. key[X] is true, if the key is currently pressed
     bool key[16] {false};
 
@@ -107,7 +108,6 @@ public:
     }
 
 private:
-
     std::random_device dev; // generate a (mostly) true, slow random number
     std::mt19937 rng; // seed the mersenne twister with the random number. Pseudo-random number generator
     std::uniform_int_distribution<std::mt19937::result_type> rand_256; // tweak the random numbers to a range of [0,255] both inclusive. This is guaranteed to be unbiased

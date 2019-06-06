@@ -32,7 +32,7 @@ void chip8::cycle() {
 }
 
 void chip8::fetch(){
-    chip8::opcode = memory[PC] << 8 | memory[PC+1];
+    chip8::opcode = (memory[PC] << 8) | memory[PC+1];
 }
 
 void chip8::decode() {
@@ -46,16 +46,20 @@ void chip8::decode() {
         case 0x0000:{
             // opcodes in the form of 0x00CD There are only two, 00EE and 00E0
             switch (opcode&0x00FF){
-                case 0x0E00:
-                    std::cout << opcode << " not implemented" << std::endl;
+                case 0x00E0:
+                    sprintf(info_string,"opcode 0x%04x not implemented",opcode);
+                    PC+=2;
+                    //std::cout << opcode << " not implemented" << std::endl;
                     break;
 
                 case 0x00EE:
-                    std::cout << opcode << " not implemented" << std::endl;
+                    sprintf(info_string,"opcode 0x%04x not implemented",opcode);
+                    //std::cout << opcode << " not implemented" << std::endl;
                     break;
 
                 default:
-                    std::cout << "Unknown opcode: " << opcode << std::endl;
+                    sprintf(info_string,"Unknown opcode 0x%04x",opcode);
+                    //std::cout << "Unknown opcode: " << opcode << std::endl;
                     break;
             }
             break;
@@ -68,7 +72,8 @@ void chip8::decode() {
         }
 
         case 0x2000:{
-            std::cout << opcode << " not implemented" << std::endl;
+            sprintf(info_string,"opcode 0x%04x not implemented",opcode);
+            //std::cout << opcode << " not implemented" << std::endl;
             break;
         }
 
@@ -220,7 +225,8 @@ void chip8::decode() {
         }
 
         case 0xD000:{
-            std::cout << opcode << " not implemented" << std::endl;
+            //std::cout << opcode << " not implemented" << std::endl;
+            sprintf(info_string,"opcode 0x%04x not implemented",opcode);
             break;
         }
 
@@ -255,7 +261,8 @@ void chip8::decode() {
                     break;
                 }
                 case 0x0A:{
-                    std::cout << opcode << " not implemented" << std::endl;
+                    //std::cout << opcode << " not implemented" << std::endl;
+                    sprintf(info_string,"opcode 0x%04x not implemented",opcode);
                     break;
                 }
                 case 0x15:{
